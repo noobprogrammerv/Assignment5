@@ -34,7 +34,7 @@ public class Controller {
     @FXML
     private ListView<Car> carsResultsListView;
     @FXML
-    private ListView<Reservation> reservationListView;
+    private ListView<Reservation> reservationsListView;
     @FXML
     private ListView<Reservation> reservationResultsListView;
     @FXML
@@ -100,6 +100,7 @@ public class Controller {
     void buttonShowCarByIdHandler(ActionEvent event){
         String id = idTextField.getText();
         showCarInList(id);
+        idTextField.clear();
 
     }
     void showCarInList(String id) {
@@ -160,6 +161,8 @@ public class Controller {
         ArrayList<Reservation> reservations = this.reservationsService.getAll();
         carsList = FXCollections.observableArrayList(cars);
         carsListView.setItems(carsList);
+        reservationsList = FXCollections.observableArrayList(reservations);
+        reservationsListView.setItems(reservationsList);
     }
 }
 
