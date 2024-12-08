@@ -1,0 +1,15 @@
+//assignment 3
+// functionUnderTest_scenarioOrInput_expected
+//isPrime_PrimeNumber_ReturnTrue
+//assert(isPrime(13) == true);
+//isPrime_NotPrimeNumber_ReturnTrue
+//isPrime_String_ThrowException
+
+//We have [service] class -> [IRepo] <- [Repo]
+//                           [TFRepo]  -> [IRepo]
+// write tests for service without the rest of the classes
+// create a [FakeRepo]
+// in the FakeRepo:
+//IRepo repo = new FakeRepo();
+//IService service = new service(repo);
+//example assert: assert(service.FunctionBeingTested(13) == true);

@@ -1,0 +1,16 @@
+[ {
+  "id" : "1",
+  "make" : "Dacia",
+  "model" : "Logan",
+  "year" : 2020
+}, {
+  "id" : "2",
+  "make" : "Dacia",
+  "model" : "Duster",
+  "year" : 2035
+}, {
+  "id" : "64",
+  "make" : "Mercedes",
+  "model" : "C",
+  "year" : 2017
+} ]

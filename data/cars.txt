@@ -1,0 +1,4 @@
+77,asd,dds,1
+1,Masina,Buna,2017
+3,asd,das,2023
+4,Caruta,Buna,1900
