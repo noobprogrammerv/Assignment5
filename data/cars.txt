@@ -1,4 +1,4 @@
 1,VW,Tiguan,2012
-2,Dacia,Logan,2023
+2,Dacia,Sandero,2007
 3,VW,Touareg,2006
 7,Dacia,Duster,2024

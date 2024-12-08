@@ -38,13 +38,13 @@ public class Controller {
     @FXML
     private ListView<Reservation> reservationResultsListView;
     @FXML
-    private TextField idTextField;
+    private TextField carIdTextField;
     @FXML
-    private TextField makeTextField;
+    private TextField carMakeTextField;
     @FXML
-    private TextField modelTextField;
+    private TextField carModelTextField;
     @FXML
-    private TextField yearTextField;
+    private TextField carYearTextField;
 
     // 16 in total
     @FXML // 1
@@ -63,16 +63,16 @@ public class Controller {
     // 1) Add car
     @FXML
     void buttonAddCarHandler(ActionEvent event){
-        String id = idTextField.getText();
-        String make = makeTextField.getText();
-        String model = modelTextField.getText();
-        int year = Integer.parseInt(yearTextField.getText());
+        String id = carIdTextField.getText();
+        String make = carMakeTextField.getText();
+        String model = carModelTextField.getText();
+        int year = Integer.parseInt(carYearTextField.getText());
         carsService.addCar(id, make, model, year);
         resetObservableList();
-        idTextField.clear();
-        makeTextField.clear();
-        modelTextField.clear();
-        yearTextField.clear();
+        carIdTextField.clear();
+        carMakeTextField.clear();
+        carModelTextField.clear();
+        carYearTextField.clear();
     }
     // 2) remove car
     @FXML
@@ -84,23 +84,23 @@ public class Controller {
     // 3) update car
     @FXML
     void buttonUpdateCarHandler(ActionEvent event){
-        String id = idTextField.getText();
-        String make = makeTextField.getText();
-        String model = modelTextField.getText();
-        int year = Integer.parseInt(yearTextField.getText());
+        String id = carIdTextField.getText();
+        String make = carMakeTextField.getText();
+        String model = carModelTextField.getText();
+        int year = Integer.parseInt(carYearTextField.getText());
         carsService.modifyCar(id, make, model, year);
         resetObservableList();
-        idTextField.clear();
-        makeTextField.clear();
-        modelTextField.clear();
-        yearTextField.clear();
+        carIdTextField.clear();
+        carMakeTextField.clear();
+        carModelTextField.clear();
+        carYearTextField.clear();
     }
     // 4) show car by id
     @FXML
     void buttonShowCarByIdHandler(ActionEvent event){
-        String id = idTextField.getText();
+        String id = carIdTextField.getText();
         showCarInList(id);
-        idTextField.clear();
+        carIdTextField.clear();
 
     }
     void showCarInList(String id) {
@@ -135,14 +135,30 @@ public class Controller {
         for (Car car : carsService.getAll()) {
             carsRepo.addEntity(car.getId(), car);
         }
-        int year = Integer.parseInt(yearTextField.getText());
+        int year = Integer.parseInt(carYearTextField.getText());
         AbstractFilter<Car> carFilter = new FilterCarsByYear(year);
         FilteredCarsService filteredCarsService = new FilteredCarsService(carsRepo, validator, carFilter);
         ArrayList<Car> cars = filteredCarsService.getAll();
         carsList = FXCollections.observableArrayList(cars);
         carsResultsListView.setItems(carsList);
-        yearTextField.clear();
+        carYearTextField.clear();
     }
+    // 7) Add car
+    /*@FXML
+    void buttonAddCarHandler(ActionEvent event){
+        String id = idTextField.getText();
+        String make = makeTextField.getText();
+        String model = modelTextField.getText();
+        int year = Integer.parseInt(yearTextField.getText());
+        carsService.addCar(id, make, model, year);
+        resetObservableList();
+        idTextField.clear();
+        makeTextField.clear();
+        modelTextField.clear();
+        yearTextField.clear();
+    }*/
+
+
 
     void resetObservableList(){
         ArrayList<Car> cars = this.carsService.getAll();
