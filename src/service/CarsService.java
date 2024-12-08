@@ -21,6 +21,12 @@ public class CarsService {
         this.carValidator = validator;
     }
 
+    /// COPY CONSTRUCTOR FOR GUI
+    public CarsService(CarsService other) {
+        this.carsRepo = other.carsRepo;
+        this.carValidator = other.carValidator;
+    }
+
     public void addCar(String id, String make, String model, int year) throws ValidateException {
         Car car = new Car(id, make, model, year);
         // We perform the validation

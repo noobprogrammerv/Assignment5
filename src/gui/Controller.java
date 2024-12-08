@@ -1,9 +1,8 @@
 package gui;
-
-import domain.Car;
 import domain.Reservation;
-import domain.Identifiable;
-import javafx.beans.value.ObservableObjectValue;
+import filter.FilterCarsByYear;
+import domain.Car;
+import filter.AbstractFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,19 +10,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import repository.CarRepository;
+import repository.IRepository;
 import service.CarsService;
+import service.FilteredCarsService;
+import service.ReservationsService;
+import validator.CarValidator;
+import validator.Validator;
 
 import java.util.ArrayList;
 
+import static java.lang.Integer.parseInt;
+
 public class Controller {
-    CarsService serv;
+    CarsService carsService;
+    ReservationsService reservationsService;
+
     ObservableList<Car> carsList;
-    ObservableList<Car> resultsList;
+    ObservableList<Reservation> reservationsList;
 
     @FXML
     private ListView<Car> carsListView;
     @FXML
-    private ListView<Car> resultsListView;
+    private ListView<Car> carsResultsListView;
+    @FXML
+    private ListView<Reservation> reservationListView;
+    @FXML
+    private ListView<Reservation> reservationResultsListView;
     @FXML
     private TextField idTextField;
     @FXML
@@ -33,14 +46,19 @@ public class Controller {
     @FXML
     private TextField yearTextField;
 
-    @FXML
+    // 16 in total
+    @FXML // 1
     private Button buttonRemoveCar;
-    @FXML
+    @FXML // 2
     private Button buttonAddCar;
-    @FXML
+    @FXML // 3
     private Button buttonUpdateCar;
-    @FXML
+    @FXML // 4
     private Button buttonShowCarById;
+    @FXML // 5
+    private Button buttonShowAllCars;
+    @FXML // 6
+    private Button buttonFilterCarsByYear;
 
     // 1) Add car
     @FXML
@@ -49,7 +67,7 @@ public class Controller {
         String make = makeTextField.getText();
         String model = modelTextField.getText();
         int year = Integer.parseInt(yearTextField.getText());
-        serv.addCar(id, make, model, year);
+        carsService.addCar(id, make, model, year);
         resetObservableList();
         idTextField.clear();
         makeTextField.clear();
@@ -60,7 +78,7 @@ public class Controller {
     @FXML
     void buttonRemoveCarHandler(ActionEvent event){
         Car car = carsListView.getSelectionModel().getSelectedItem();
-        serv.deleteCar(car.getId());
+        carsService.deleteCar(car.getId());
         resetObservableList();
     }
     // 3) update car
@@ -70,7 +88,7 @@ public class Controller {
         String make = makeTextField.getText();
         String model = modelTextField.getText();
         int year = Integer.parseInt(yearTextField.getText());
-        serv.modifyCar(id, make, model, year);
+        carsService.modifyCar(id, make, model, year);
         resetObservableList();
         idTextField.clear();
         makeTextField.clear();
@@ -85,35 +103,61 @@ public class Controller {
 
     }
     void showCarInList(String id) {
-        Car car = serv.findCarById(id);
+        Car car = carsService.findCarById(id);
         if (car != null) {
             ObservableList<Car> carList = FXCollections.observableArrayList(car);
-            resultsListView.setItems(carList);
+            carsResultsListView.setItems(carList);
         } else {
             // car not found, we clear the list
-            resultsListView.setItems(FXCollections.observableArrayList());
+            carsResultsListView.setItems(FXCollections.observableArrayList());
         }
     }
     // 5) show all cars
+    @FXML
+    void buttonShowAllCarsHandler(ActionEvent event){
+        showAllCarsInList();
+    }
     void showAllCarsInList(){
-        ArrayList<Car> cars = this.serv.getAll();
+        ArrayList<Car> cars = this.carsService.getAll();
         carsList = FXCollections.observableArrayList(cars);
-        resultsListView.setItems(carsList);
+        carsResultsListView.setItems(carsList);
+    }
+    // 6) filter cars by year
+    @FXML
+    void buttonFilterCarsByYearHandler(ActionEvent event){
+        showFilteredCarsByYear();
+    }
+    void showFilteredCarsByYear() {
+        CarsService filteredService = new CarsService(carsService);
+        IRepository<String, Car> carsRepo = new CarRepository();
+        Validator<Car> validator = new CarValidator();
+        for (Car car : carsService.getAll()) {
+            carsRepo.addEntity(car.getId(), car);
+        }
+        int year = Integer.parseInt(yearTextField.getText());
+        AbstractFilter<Car> carFilter = new FilterCarsByYear(year);
+        FilteredCarsService filteredCarsService = new FilteredCarsService(carsRepo, validator, carFilter);
+        ArrayList<Car> cars = filteredCarsService.getAll();
+        carsList = FXCollections.observableArrayList(cars);
+        carsResultsListView.setItems(carsList);
+        yearTextField.clear();
     }
 
     void resetObservableList(){
-        ArrayList<Car> cars = this.serv.getAll();
+        ArrayList<Car> cars = this.carsService.getAll();
         carsList = FXCollections.observableArrayList(cars);
         carsListView.setItems(carsList);
     }
 
 
-    public Controller(CarsService serv) {
-        this.serv = serv;
+    public Controller(CarsService serv, ReservationsService reservService) {
+        this.carsService = serv;
+        this.reservationsService = reservService;
     }
 
     public void initialize() {
-        ArrayList<Car> cars = this.serv.getAll();
+        ArrayList<Car> cars = this.carsService.getAll();
+        ArrayList<Reservation> reservations = this.reservationsService.getAll();
         carsList = FXCollections.observableArrayList(cars);
         carsListView.setItems(carsList);
     }
@@ -124,8 +168,8 @@ ADDCAR                              1 - done
 REMOVECAR                           2 - done
 UPDATECAR                           3 - done
 SHOWCARBYID                         4 - done
-SHOWALLCARS                         5
-FILTERCARSBYYEAR                    6
+SHOWALLCARS                         5 - done
+FILTERCARSBYYEAR                    6 - done
 ADDRESERVATION                      7
 REMOVERESERVATION                   8
 UPDATERESERVATION                   9

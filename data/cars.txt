@@ -1,4 +1,4 @@
-1,Masina,Buna,2017
+1,VW,Tiguan,2012
 2,Dacia,Logan,2023
-4,Caruta,Buna,1900
+3,VW,Touareg,2006
 7,Dacia,Duster,2024

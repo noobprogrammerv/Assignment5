@@ -24,7 +24,7 @@ public class Reservation implements Identifiable<String>, Serializable {
     public void setCarId(String carId) { this.carId = carId; }
     @Override
     public String toString() {
-        return "Reservation (id: " + id + " | date: " + date + " | car id: " + carId + ')';
+        return "Reservation - id: " + id + " | date: " + date + " | car id: " + carId;
     }
 
 }

@@ -13,13 +13,7 @@
 <AnchorPane prefHeight="525.0" prefWidth="1007.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 
-        <TitledPane text="Available Cars" layoutX="18.0" layoutY="16.0" prefHeight="310.0" prefWidth="435.0" collapsible="false">
-            <content>
-                <ListView fx:id="carsListView" />
-            </content>
-        </TitledPane>
-
-        <TitledPane text="Car Details" layoutX="468.0" layoutY="32.0" collapsible="false">
+        <TitledPane collapsible="false" layoutX="759.0" layoutY="14.0" prefHeight="147.0" prefWidth="244.0" text="Car details">
             <content>
                 <GridPane prefHeight="120.0" prefWidth="219.0">
                     <columnConstraints>
@@ -46,7 +40,7 @@
             </content>
         </TitledPane>
 
-        <TitledPane text="Car Operations" layoutX="467.0" layoutY="169.0" collapsible="false">
+        <TitledPane collapsible="true" layoutX="759.0" layoutY="167.0" text="Operations">
             <content>
                 <GridPane prefHeight="310.0" prefWidth="242.0">
                     <columnConstraints>
@@ -59,25 +53,47 @@
                         <RowConstraints maxHeight="111.33334350585938" minHeight="4.66668701171875" prefHeight="27.999989827473954" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="131.3333282470703" minHeight="0.0" prefHeight="25.999999999999986" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="32.00002034505208" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="96.66664632161459" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="27.333353678385407" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="27.666666666666657" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="93.66666666666666" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="38.99997965494791" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="buttonRemoveCar" mnemonicParsing="false" onAction="#buttonRemoveCarHandler" text="Remove" GridPane.rowIndex="1" />
-                        <Button fx:id="buttonAddCar" mnemonicParsing="false" onAction="#buttonAddCarHandler" text="Add" />
-                        <Button fx:id="buttonUpdateCar" mnemonicParsing="false" onAction="#buttonUpdateCarHandler" text="Update" GridPane.rowIndex="2" />
+                        <Button fx:id="buttonRemoveCar" mnemonicParsing="false" onAction="#buttonRemoveCarHandler" text="RemoveCar" GridPane.rowIndex="1" />
+                        <Button fx:id="buttonAddCar" mnemonicParsing="false" onAction="#buttonAddCarHandler" text="AddCar" />
+                        <Button fx:id="buttonUpdateCar" mnemonicParsing="false" onAction="#buttonUpdateCarHandler" text="UpdateCar" GridPane.rowIndex="2" />
                         <Button fx:id="buttonShowCarById" mnemonicParsing="false" onAction="#buttonShowCarByIdHandler" text="ShowCarById" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" text="ShowAllCars" GridPane.rowIndex="4" />
+                        <Button fx:id="buttonShowAllCars" mnemonicParsing="false" onAction="#buttonShowAllCarsHandler" text="ShowAllCars" GridPane.rowIndex="4" />
+                        <Button fx:id="buttonFilterCarsByYear" mnemonicParsing="false" onAction="#buttonFilterCarsByYearHandler" text="FilterCarsByYear" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
             </content>
         </TitledPane>
 
-        <TitledPane text="Car Results" layoutX="18.0" layoutY="341.0" prefHeight="97.0" prefWidth="435.0" collapsible="false">
+
+        <TitledPane collapsible="false" layoutX="7.0" layoutY="14.0" prefHeight="212.0" prefWidth="355.0" text="Available cars">
             <content>
-                <ListView fx:id="resultsListView" />
+                <ListView fx:id="carsListView" prefHeight="284.0" prefWidth="327.0" />
             </content>
         </TitledPane>
+
+        <TitledPane collapsible="false" layoutX="7.0" layoutY="231.0" prefHeight="97.0" prefWidth="355.0" text="Cars results">
+            <content>
+                <ListView fx:id="carsResultsListView" />
+            </content>
+        </TitledPane>
+
+        <TitledPane collapsible="false" layoutX="394.0" layoutY="14.0" prefHeight="212.0" prefWidth="355.0" text="Available reservations">
+            <content>
+                <ListView fx:id="reservationListView" prefHeight="284.0" prefWidth="337.0" />
+            </content>
+        </TitledPane>
+
+        <TitledPane collapsible="false" layoutX="394.0" layoutY="231.0" prefHeight="97.0" prefWidth="355.0" text="Reservations results">
+            <content>
+                <ListView fx:id="reservationResultsListView" />
+            </content>
+        </TitledPane>
+
+
     </children>
 </AnchorPane>

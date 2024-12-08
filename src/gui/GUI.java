@@ -1,7 +1,10 @@
 package gui;
 
 import domain.Car;
+import domain.Reservation;
+import service.ReservationsService;
 import validator.CarValidator;
+import validator.ReservationValidator;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -32,29 +35,48 @@ public class GUI extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view.fxml"));
 
-        IRepository<String, Car> repo = null;
+        IRepository<String, Car> carsRepo = null;
+        IRepository<String, Reservation> reservationsRepo = null;
+
         Properties prop = new Properties();
         try {
             prop.load(new FileReader("settings.properties"));
 
-            String repoType = prop.getProperty("repo_type_cars");
-            String repoPath = prop.getProperty("repo_path_cars");
+            String carsRepoType = prop.getProperty("repo_type_cars");
+            String carsRepoPath = prop.getProperty("repo_path_cars");
+            String reservationsRepoType = prop.getProperty("repo_type_reservations");
+            String reservationsRepoPath = prop.getProperty("repo_path_reservations");
 
-            if (repoType.equals("text"))
-                repo = new TextFileCarsRepository(repoPath);
-            if (repoType.equals("binary"))
-                repo = new BinaryFileCarsRepository(repoPath);
-            if (repoType.equals("memory"))
-                repo = new CarRepository();
-            if (repoType.equals("DB"))
-                repo = new DBCarsRepository();
+
+            if (carsRepoType.equals("text"))
+                carsRepo = new TextFileCarsRepository(carsRepoPath);
+            if (carsRepoType.equals("binary"))
+                carsRepo = new BinaryFileCarsRepository(carsRepoPath);
+            if (carsRepoType.equals("memory"))
+                carsRepo = new CarRepository();
+            if (carsRepoType.equals("DB"))
+                carsRepo = new DBCarsRepository();
+
+            if (reservationsRepoType.equals("text"))
+                reservationsRepo = new TextFileReservationsRepository(reservationsRepoPath);
+            if (reservationsRepoType.equals("binary"))
+                reservationsRepo = new BinaryFileReservationsRepository(reservationsRepoPath);
+            if (reservationsRepoType.equals("memory"))
+                reservationsRepo = new ReservationRepository();
+            if (reservationsRepoType.equals("DB"))
+                reservationsRepo = new DBReservationsRepository();
+
+
+
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
         CarValidator validator = new CarValidator();
-        CarsService service = new CarsService(repo, validator);
-        Controller controller = new Controller(service);
+        ReservationValidator reservationValidator = new ReservationValidator();
+        CarsService carsService = new CarsService(carsRepo, validator);
+        ReservationsService reservationsService = new ReservationsService(reservationsRepo, reservationValidator);
+        Controller controller = new Controller(carsService, reservationsService);
 
         loader.setController(controller);
         Scene scene = new Scene(loader.load());

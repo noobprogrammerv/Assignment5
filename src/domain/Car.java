@@ -37,7 +37,7 @@ public class Car implements Identifiable<String>, Serializable {
     }
     @Override
     public String toString() {
-        return "Car: (id: " + id + ", make: " + make + ", model: " + model + ", year: " + year + ')';
+        return "Car - id: " + id + ", make: " + make + ", model: " + model + ", year: " + year;
     }
     @Override
     public int hashCode() { return Objects.hash(id, make, model, year); }
