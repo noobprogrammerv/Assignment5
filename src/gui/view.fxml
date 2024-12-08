@@ -13,37 +13,6 @@
 <AnchorPane prefHeight="525.0" prefWidth="1007.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 
-        <!-- Operations table -->
-        <TitledPane collapsible="true" layoutX="487.0" layoutY="174.0" prefHeight="337.0" prefWidth="495.0" text="Operations">
-            <content>
-                <GridPane prefHeight="310.0" prefWidth="242.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="63.333343505859375" minHeight="8.333343505859375" prefHeight="34.33333333333333" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="63.333343505859375" minHeight="10.0" prefHeight="32.666662851969406" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="111.33334350585938" minHeight="4.66668701171875" prefHeight="31.333343505859375" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="0.0" prefHeight="30.9999974568685" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="33.66667683919272" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="29.333323160807282" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="38.00001017252603" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="66.33335367838541" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <Button fx:id="buttonRemoveCar" mnemonicParsing="false" onAction="#buttonRemoveCarHandler" text="RemoveCar" GridPane.rowIndex="1" />
-                        <Button fx:id="buttonAddCar" mnemonicParsing="false" onAction="#buttonAddCarHandler" text="AddCar" />
-                        <Button fx:id="buttonUpdateCar" mnemonicParsing="false" onAction="#buttonUpdateCarHandler" text="UpdateCar" GridPane.rowIndex="2" />
-                        <Button fx:id="buttonShowCarById" mnemonicParsing="false" onAction="#buttonShowCarByIdHandler" text="ShowCarById" GridPane.rowIndex="3" />
-                        <Button fx:id="buttonShowAllCars" mnemonicParsing="false" onAction="#buttonShowAllCarsHandler" text="ShowAllCars" GridPane.rowIndex="4" />
-                        <Button fx:id="buttonFilterCarsByYear" mnemonicParsing="false" onAction="#buttonFilterCarsByYearHandler" text="FilterCarsByYear" GridPane.rowIndex="5" />
-                  <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="100.0" text="AddReservation" GridPane.rowIndex="6" />
-                    </children>
-                </GridPane>
-            </content>
-        </TitledPane>
-
         <!-- Available cars table -->
         <TitledPane collapsible="false" layoutX="7.0" layoutY="14.0" prefHeight="212.0" prefWidth="235.0" text="Available cars">
             <content>
@@ -65,7 +34,7 @@
         <!-- Reservations results -->
         <TitledPane collapsible="false" layoutX="242.0" layoutY="231.0" prefHeight="97.0" prefWidth="235.0" text="Reservations results">
             <content>
-                <ListView fx:id="reservationResultsListView" />
+                <ListView fx:id="reservationsResultsListView" />
             </content>
         </TitledPane>
 
@@ -116,11 +85,52 @@
                         <Label text="Car ID" GridPane.rowIndex="2" />
                         <TextField fx:id="resIdTextField" GridPane.columnIndex="1" />
                         <TextField fx:id="resDateTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="resCarIdTextField1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="resCarIdTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
             </content>
         </TitledPane>
+
+        <!-- Buttons table (operations table) -->
+        <TitledPane collapsible="true" layoutX="487.0" layoutY="174.0" prefHeight="337.0" prefWidth="495.0" text="Operations">
+            <content>
+                <GridPane prefHeight="310.0" prefWidth="242.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="63.333343505859375" minHeight="8.333343505859375" prefHeight="40.333333333333336" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="63.333343505859375" minHeight="10.0" prefHeight="38.00002034505209" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="111.33334350585938" minHeight="4.66668701171875" prefHeight="39.99997965494791" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="0.0" prefHeight="34.66667683919272" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="35.33335367838541" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="34.66670735677084" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="36.66668701171878" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="35.999979654947936" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="buttonRemoveCar" mnemonicParsing="false" onAction="#buttonRemoveCarHandler" text="RemoveCar" GridPane.rowIndex="1" />
+                        <Button fx:id="buttonAddCar" mnemonicParsing="false" onAction="#buttonAddCarHandler" text="AddCar" />
+                        <Button fx:id="buttonUpdateCar" mnemonicParsing="false" onAction="#buttonUpdateCarHandler" text="UpdateCar" GridPane.rowIndex="2" />
+                        <Button fx:id="buttonShowCarById" mnemonicParsing="false" onAction="#buttonShowCarByIdHandler" text="ShowCarById" GridPane.rowIndex="3" />
+                        <Button fx:id="buttonShowAllCars" mnemonicParsing="false" onAction="#buttonShowAllCarsHandler" text="ShowAllCars" GridPane.rowIndex="4" />
+                        <Button fx:id="buttonFilterCarsByYear" mnemonicParsing="false" onAction="#buttonFilterCarsByYearHandler" text="FilterCarsByYear" GridPane.rowIndex="5" />
+                        <Button fx:id="buttonAddReservation" mnemonicParsing="false" onAction="#buttonAddReservationHandler" text="AddReservation" GridPane.rowIndex="6" />
+                        <Button fx:id="buttonRemoveReservation" mnemonicParsing="false" onAction="#buttonRemoveReservationHandler" text="RemoveReservation" GridPane.rowIndex="7" />
+                        <Button fx:id="buttonUpdateReservation" mnemonicParsing="false" onAction="#buttonUpdateReservationHandler" text="UpdateReservation" GridPane.columnIndex="1" />
+                        <Button fx:id="buttonShowReservationById" mnemonicParsing="false" onAction="#buttonShowReservationByIdHandler" text="ShowReservationById" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="buttonShowAllReservations" mnemonicParsing="false" onAction="#buttonShowAllReservationsHandler" text="ShowAllReservations" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="buttonGetAllCarsWithSameMake" mnemonicParsing="false" onAction="#buttonGetAllCarsWithSameMakeHandler" text="GetAllCarsWithSameMake" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button fx:id="buttonGetAllCarsWithSameYear" mnemonicParsing="false" onAction="#buttonGetAllCarsWithSameYearHandler" text="GetAllCarsWithSameYear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button fx:id="buttonGetAllCarsReservedAt" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedAtHandler" text="GetAllCarsReservedAt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="buttonGetAllCarsReservedBefore" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedBeforeHandler" text="GetAllCarsReservedBefore" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button fx:id="buttonGetAllCarsReservedAfter" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedAfterHandler" text="GetAllCarsReservedAfter" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    </children>
+                </GridPane>
+            </content>
+        </TitledPane>
+
 
 
     </children>

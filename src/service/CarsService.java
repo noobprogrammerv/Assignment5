@@ -59,6 +59,18 @@ public class CarsService {
                 .map(r -> r.getId()).distinct()
                 .collect(Collectors.toList());
     }
+    //FOR GUI
+    public List<Car> getAllCarsWithSameMakeGUI(String make) {
+        List<Car> carsWithSameMake = new ArrayList<>();
+        for (Car car : carsRepo.getAllEntities()) {
+            if (car.getMake().equalsIgnoreCase(make)) {
+                carsWithSameMake.add(car);
+            }
+        }
+        return carsWithSameMake;
+    }
+
+
     // 5) Get all cars with same fabrication year
     public List<String> getAllCarsWithSameYear(int year) {
         return StreamSupport.stream(carsRepo.getAllEntities().spliterator(), false)
@@ -66,4 +78,16 @@ public class CarsService {
                 .map(r -> r.getId()).distinct()
                 .collect(Collectors.toList());
     }
+    // FOR GUI
+    public List<Car> getAllCarsWithSameYearGUI(int year) {
+        List<Car> carsWithSameYear = new ArrayList<>();
+        for (Car car : carsRepo.getAllEntities()) {
+            if (car.getYear() == year) {
+                carsWithSameYear.add(car);
+            }
+        }
+        return carsWithSameYear;
+    }
+
+
 }

@@ -56,6 +56,17 @@ public class ReservationsService {
                 .collect(Collectors.toList());
 
     }
+    // FOR GUI
+    public List<Reservation> getAllReservationsReservedAt(LocalDate reservedDate ) {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Reservation reservation : reservationsRepo.getAllEntities()) {
+            if (reservation.getDate().equals(reservedDate)) {
+                reservations.add(reservation);
+            }
+        }
+        return reservations;
+    }
+
     // 2) Get all reservations reserved before a certain date
     public List<String> getAllCarsReservedBefore(LocalDate reservedDate) {
         return StreamSupport.stream(reservationsRepo.getAllEntities().spliterator(), false)
@@ -63,12 +74,33 @@ public class ReservationsService {
                 .map(r -> r.getCarId()).distinct()
                 .collect(Collectors.toList());
     }
+    // FOR GUI
+    public List<Reservation> getAllReservationsReservedBefore(LocalDate reservedDate ) {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Reservation reservation : reservationsRepo.getAllEntities()) {
+            if (reservation.getDate().isBefore(reservedDate)) {
+                reservations.add(reservation);
+            }
+        }
+        return reservations;
+    }
+
     // 3) Get all reservations reserved after a certain date
     public List<String> getAllCarsReservedAfter(LocalDate reservedDate) {
         return StreamSupport.stream(reservationsRepo.getAllEntities().spliterator(), false)
                 .filter(reservation -> reservation.getDate().isAfter(reservedDate))
                 .map(r -> r.getCarId()).distinct()
                 .collect(Collectors.toList());
+    }
+    // FOR GUI
+    public List<Reservation> getAllReservationsReservedAfter(LocalDate reservedDate ) {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Reservation reservation : reservationsRepo.getAllEntities()) {
+            if (reservation.getDate().isAfter(reservedDate)) {
+                reservations.add(reservation);
+            }
+        }
+        return reservations;
     }
 
 }

@@ -194,7 +194,7 @@ public class UI {
                     System.out.println();
                     List<String> carIds = carsService.getAllCarsWithSameYear(year);
                     System.out.println("Cars with same year are: " + carIds);
-                }else if (command == GETALLCARSRESERVEDAT) {
+                } else if (command == GETALLCARSRESERVEDAT) {
                     System.out.print("Enter date: ");
                     String resDate = scanner.nextLine();
                     System.out.println();
