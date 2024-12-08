@@ -108,6 +108,7 @@
                         <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="34.66670735677084" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="36.66668701171878" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="35.999979654947936" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="131.3333282470703" minHeight="10.0" prefHeight="35.999979654947936" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Button fx:id="buttonRemoveCar" mnemonicParsing="false" onAction="#buttonRemoveCarHandler" text="RemoveCar" GridPane.rowIndex="1" />
@@ -126,6 +127,8 @@
                         <Button fx:id="buttonGetAllCarsReservedAt" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedAtHandler" text="GetAllCarsReservedAt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Button fx:id="buttonGetAllCarsReservedBefore" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedBeforeHandler" text="GetAllCarsReservedBefore" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Button fx:id="buttonGetAllCarsReservedAfter" mnemonicParsing="false" onAction="#buttonGetAllCarsReservedAfterHandler" text="GetAllCarsReservedAfter" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Button fx:id="undoButton" mnemonicParsing="false" onAction="#undoHandler" text="Undo" GridPane.rowIndex="8" />
+                        <Button fx:id="redoButton" mnemonicParsing="false" onAction="#redoHandler" text="Redo" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                     </children>
                 </GridPane>
             </content>

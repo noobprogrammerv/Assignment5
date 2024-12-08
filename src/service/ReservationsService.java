@@ -102,5 +102,7 @@ public class ReservationsService {
         }
         return reservations;
     }
-
+    public IRepository<String, Reservation> getRepo() {
+        return reservationsRepo;
+    }
 }

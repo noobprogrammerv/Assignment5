@@ -1,4 +1,11 @@
 package gui;
+
+import actions.ActionAdd;
+import actions.ActionRemove;
+import actions.ActionUpdate;
+import actions.IAction;
+import java.util.Stack;
+
 import domain.Reservation;
 import filter.FilterCarsByYear;
 import domain.Car;
@@ -30,6 +37,143 @@ public class Controller {
 
     ObservableList<Car> carsList;
     ObservableList<Reservation> reservationsList;
+
+
+    /// pt bonus
+    private Stack<IAction> undoStack = new Stack<>();
+    private Stack<IAction> redoStack = new Stack<>();
+
+    private void refreshUI() {
+        // actualizam lista de  masini
+        ArrayList<Car> cars = carsService.getAll();
+        carsList = FXCollections.observableArrayList(cars);
+        carsListView.setItems(carsList);
+
+        // actualizam lista de rezervari
+        ArrayList<Reservation> reservations = reservationsService.getAll();
+        reservationsList = FXCollections.observableArrayList(reservations);
+        reservationsListView.setItems(reservationsList);
+
+        // activam sau dezactivam butoanele Undo și Redo
+        undoButton.setDisable(undoStack.isEmpty());
+        redoButton.setDisable(redoStack.isEmpty());
+    }
+
+
+
+    private void executeAction(IAction action) {
+        action.executeRedo();
+        undoStack.push(action);
+        redoStack.clear();
+        refreshUI(); // Reîmprospătează interfața
+    }
+
+    @FXML
+    void undoHandler(ActionEvent event) {
+        if (!undoStack.isEmpty()) {
+            IAction action = undoStack.pop();
+            action.executeUndo();
+            redoStack.push(action);
+            refreshUI();
+        }
+    }
+
+    @FXML
+    void redoHandler(ActionEvent event) {
+        if (!redoStack.isEmpty()) {
+            IAction action = redoStack.pop();
+            action.executeRedo();
+            undoStack.push(action);
+            refreshUI();
+        }
+    }
+
+    @FXML
+    void buttonAddCarHandler(ActionEvent event) {
+        String id = carIdTextField.getText();
+        String make = carMakeTextField.getText();
+        String model = carModelTextField.getText();
+        int year = Integer.parseInt(carYearTextField.getText());
+
+        Car newCar = new Car(id, make, model, year);
+        executeAction(new ActionAdd<>(carsService.getRepo(), newCar)); // use real repo
+
+        carIdTextField.clear();
+        carMakeTextField.clear();
+        carModelTextField.clear();
+        carYearTextField.clear();
+    }
+
+
+    @FXML
+    void buttonRemoveCarHandler(ActionEvent event) {
+        Car car = carsListView.getSelectionModel().getSelectedItem();
+        if (car != null) {
+            executeAction(new ActionRemove<>(carsService.getRepo(), car)); // use real repo
+        }
+    }
+
+
+    @FXML
+    void buttonUpdateCarHandler(ActionEvent event) {
+        String id = carIdTextField.getText();
+        String make = carMakeTextField.getText();
+        String model = carModelTextField.getText();
+        int year = Integer.parseInt(carYearTextField.getText());
+
+        Car oldCar = carsService.findCarById(id);
+        Car updatedCar = new Car(id, make, model, year);
+
+        executeAction(new ActionUpdate<>(carsService.getRepo(), oldCar, updatedCar)); // use real repo
+
+        carIdTextField.clear();
+        carMakeTextField.clear();
+        carModelTextField.clear();
+        carYearTextField.clear();
+    }
+
+    @FXML
+    void buttonAddReservationHandler(ActionEvent event) {
+        String id = resIdTextField.getText();
+        LocalDate date = LocalDate.parse(resDateTextField.getText());
+        String carId = resCarIdTextField.getText();
+
+        Reservation newReservation = new Reservation(id, date, carId);
+        executeAction(new ActionAdd<>(reservationsService.getRepo(), newReservation)); // Folosește repository-ul pentru rezervări
+
+        resIdTextField.clear();
+        resDateTextField.clear();
+        resCarIdTextField.clear();
+    }
+
+    @FXML
+    void buttonRemoveReservationHandler(ActionEvent event) {
+        Reservation reservation = reservationsListView.getSelectionModel().getSelectedItem();
+        if (reservation != null) {
+            executeAction(new ActionRemove<>(reservationsService.getRepo(), reservation)); // Folosește repository-ul pentru rezervări
+        }
+    }
+    @FXML
+    void buttonUpdateReservationHandler(ActionEvent event) {
+        String id = resIdTextField.getText();
+        LocalDate date = LocalDate.parse(resDateTextField.getText());
+        String carId = resCarIdTextField.getText();
+
+        Reservation oldReservation = reservationsService.findReservationById(id);
+        Reservation updatedReservation = new Reservation(id, date, carId);
+
+        executeAction(new ActionUpdate<>(reservationsService.getRepo(), oldReservation, updatedReservation)); // Folosește repository-ul pentru rezervări
+
+        resIdTextField.clear();
+        resDateTextField.clear();
+        resCarIdTextField.clear();
+    }
+
+    /// pana la pt bonus
+
+
+
+
 
     @FXML
     private ListView<Car> carsListView;
@@ -93,11 +237,15 @@ public class Controller {
     private Button buttonGetAllCarsReservedBefore;
     @FXML // 16
     private Button buttonGetAllCarsReservedAfter;
+    @FXML
+    private Button undoButton;
+    @FXML
+    private Button redoButton;
 
 
 
 
-    // 1) Add car
+    /*// 1) Add car
     @FXML
     void buttonAddCarHandler(ActionEvent event){
         String id = carIdTextField.getText();
@@ -131,7 +279,7 @@ public class Controller {
         carMakeTextField.clear();
         carModelTextField.clear();
         carYearTextField.clear();
-    }
+    }*/
     // 4) show car by id - enter the id
     @FXML
     void buttonShowCarByIdHandler(ActionEvent event){
@@ -186,7 +334,7 @@ public class Controller {
         carsListView.setItems(carsList);
     }
 
-    // 7) Add reservation
+    /*// 7) Add reservation
     @FXML
     void buttonAddReservationHandler(ActionEvent event){
         String id = resIdTextField.getText();
@@ -216,7 +364,7 @@ public class Controller {
         resIdTextField.clear();
         resDateTextField.clear();
         resCarIdTextField.clear();
-    }
+    }*/
     // 10) show reservation by id - enter the id
     @FXML
     void buttonShowReservationByIdHandler(ActionEvent event){

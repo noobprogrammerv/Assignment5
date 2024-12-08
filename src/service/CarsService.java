@@ -88,6 +88,9 @@ public class CarsService {
         }
         return carsWithSameYear;
     }
-
+    ///  for bonus
+    public IRepository<String, Car> getRepo() {
+        return carsRepo;
+    }
 
 }
